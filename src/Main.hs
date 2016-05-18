@@ -14,5 +14,7 @@ main = do
   appPort <- read <$> getEnv "PORT"
   runTCPServer (serverSettings appPort "127.0.0.1") $ \appData ->
     rawProxyTo
-        (\_headers -> return $ Right $ ProxyDest rawhost rawport)
-        appData
+        (\_headers -> do
+         print _headers
+         return $ Right $ ProxyDest rawhost rawport)
+           appData
